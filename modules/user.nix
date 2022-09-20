@@ -6,17 +6,6 @@ with lib;
 
 let
   cfg = config.user;
-
-  idsDerivation = pkgs.runCommandLocal "ids.nix" {} ''
-    cat > $out <<EOF
-    {
-      gid = $(${pkgs.coreutils}/bin/id -g);
-      uid = $(${pkgs.coreutils}/bin/id -u);
-    }
-    EOF
-  '';
-
-  ids = import idsDerivation;
 in
 
 {
@@ -34,10 +23,6 @@ in
 
       gid = mkOption {
         type = types.int;
-        default = ids.gid;
-        description = ''
-          Gid.  This value should not be set manually except you know what you are doing.
-        '';
       };
 
       home = mkOption {
@@ -60,10 +45,6 @@ in
 
       uid = mkOption {
         type = types.int;
-        default = ids.uid;
-        description = ''
-          Uid.  This value should not be set manually except you know what you are doing.
-        '';
       };
     };
 
